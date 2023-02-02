@@ -1,4 +1,6 @@
-﻿namespace HomeWorkLinq1
+﻿using System.Linq;
+
+namespace HomeWorkLinq1
 {
     internal class Program
     {
@@ -29,13 +31,16 @@
         public void ShowCriminals(int height, int weight, string nationality)
         {
             var criminals = _criminals.Where(criminal => criminal.Height == height).Where(criminal => criminal.Weight == weight).
-                Where(criminal => criminal.Nationality == nationality).ToList();
+                Where(criminal => criminal.Nationality == nationality).SkipWhile(criminal => criminal.IsInCustody == true).ToList();
+
+            int index = 1;
 
             Console.WriteLine($"Преступники: ");
 
             foreach(Criminal criminal in criminals)
             {
-                Console.WriteLine($"{criminal.Name}");
+                Console.WriteLine($"{index}.{criminal.Name}");
+                index++;
             }
 
             Console.ReadKey();
@@ -77,18 +82,21 @@
         {
             bool isProgramOn = true;
 
-            while(isProgramOn)
+            Console.Clear();
+            Console.WriteLine($"Здравствуйте детектив, {Name}");
+
+            while (isProgramOn)
             {
                 Console.WriteLine("Введите вес преступника: ");
-                bool isHeight = int.TryParse(Console.ReadLine(), out int height);
+                bool isWeight = int.TryParse(Console.ReadLine(), out int weight);
 
                 Console.WriteLine("Введите рост преступника");
-                bool isWeight = int.TryParse(Console.ReadLine(), out int weight);
+                bool isHeight = int.TryParse(Console.ReadLine(), out int height);
 
                 Console.WriteLine("Введите национальность преступника: ");
                 string? nationality = Console.ReadLine();
 
-                if (isHeight && isWeight && nationality != null)
+                if (isWeight && isHeight && nationality != null)
                 {
                     database.ShowCriminals(height, weight, nationality);
                 }
@@ -97,7 +105,7 @@
 
         private string Welcome()
         {
-            Console.WriteLine("Здравствуйте, детектив, как Вас зовут ? : ");
+            Console.WriteLine("Как Вас зовут ? : ");
 
             string? userName = Console.ReadLine();
 
