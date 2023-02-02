@@ -6,9 +6,8 @@ namespace HomeWorkLinq1
     {
         static void Main(string[] args)
         {
-            Database database = new Database();
             Detective detective = new Detective();
-            detective.OutputCriminals(database);
+            detective.OutputCriminals();
         }
     }
 
@@ -71,6 +70,8 @@ namespace HomeWorkLinq1
 
     class Detective
     {
+        private Database _database = new();
+
         public Detective()
         {
             Name = Welcome();
@@ -78,7 +79,7 @@ namespace HomeWorkLinq1
 
         public string? Name { get; private set; }
 
-        public void OutputCriminals(Database database)
+        public void OutputCriminals()
         {
             bool isProgramOn = true;
 
@@ -98,7 +99,7 @@ namespace HomeWorkLinq1
 
                 if (isWeight && isHeight && nationality != null)
                 {
-                    database.ShowCriminals(height, weight, nationality);
+                    _database.ShowCriminals(height, weight, nationality);
                 }
             }
         }
