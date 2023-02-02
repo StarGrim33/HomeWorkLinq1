@@ -105,7 +105,7 @@ namespace HomeWorkLinq1
 
         private string Welcome()
         {
-            Console.WriteLine("Как Вас зовут ? : ");
+            Console.WriteLine("Как Вас зовут ?: ");
 
             string? userName = Console.ReadLine();
 
